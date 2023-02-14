@@ -99,7 +99,7 @@ const ForgotPassword = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Username"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
               />
             )}
           />

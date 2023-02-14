@@ -39,8 +39,8 @@ export default function Header() {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        color: (theme) => theme.palette.common.black,
-        bgcolor: (theme) => theme.palette.common.white,
+        color: (theme) => theme.palette.common.white,
+        bgcolor: (theme) => theme.palette.primary.main,
       }}
     >
       <Toolbar>
@@ -82,8 +82,19 @@ export default function Header() {
           )}
           {!session && (
             <Stack direction="row" gap={2}>
-              <Button onClick={() => navigate('/sign-in', { state: { from: location.pathname } })}>Sign In</Button>
-              <Button onClick={() => navigate('/sign-up')} variant="contained">Sign Up</Button>
+              <Button
+                onClick={() => navigate('/sign-in', { state: { from: location.pathname } })}
+                color="secondary"
+              >
+                Sign In
+              </Button>
+              <Button
+                onClick={() => navigate('/sign-up')}
+                variant="outlined"
+                color="secondary"
+              >
+                Sign Up
+              </Button>
             </Stack>
           )}
         </Box>

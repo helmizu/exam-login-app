@@ -62,7 +62,7 @@ const Login = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Username"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
               />
             )}
           />
@@ -83,7 +83,7 @@ const Login = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Password"
                 sx={{ width: 400 }}
-                color="info"
+                color="secondary"
                 type="password"
               />
             )}

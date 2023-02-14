@@ -89,7 +89,7 @@ const ResetPassword = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Password"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
                 type="password"
                 onFocus={() => setPasswordChecker(true)}
               />

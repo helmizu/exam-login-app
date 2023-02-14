@@ -95,7 +95,7 @@ const ChangePassword = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Current Password"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
                 type="password"
                 onFocus={() => setPasswordChecker(true)}
               />
@@ -118,7 +118,7 @@ const ChangePassword = () => {
                 helperText={fieldState.error?.message}
                 placeholder="New Password"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
                 type="password"
                 onFocus={() => setPasswordChecker(true)}
               />

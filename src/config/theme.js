@@ -10,15 +10,36 @@ const theme = createTheme({
       light: '#53a2be',
     },
     secondary: {
-      main: '#f49fbc',
+      main: '#fafafa',
     },
     error: {
-      main: red.A400,
+      main: '#990000',
     },
   },
   typography: {
     button: {
       textTransform: 'none'
+    },
+  },
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          color: '#fafafa'
+        },
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& fieldset': {
+            borderColor: '#fafafa',
+          },
+          '&:hover fieldset': {
+            borderColor: '#fafafaaa !important',
+          },
+        }
+      }
     }
   }
 });

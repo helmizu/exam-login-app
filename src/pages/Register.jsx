@@ -84,7 +84,7 @@ const Register = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Full Name"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
               />
             )}
           />
@@ -105,7 +105,7 @@ const Register = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Username"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
               />
             )}
           />
@@ -126,7 +126,7 @@ const Register = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Email"
                 sx={{ width: 400 }}
-                color="primary"
+                color="secondary"
               />
             )}
           />
@@ -147,7 +147,7 @@ const Register = () => {
                 helperText={fieldState.error?.message}
                 placeholder="Password"
                 sx={{ width: 400 }}
-                color="info"
+                color="secondary"
                 type="password"
                 onFocus={() => setPasswordChecker(true)}
               />
