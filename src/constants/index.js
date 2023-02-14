@@ -4,7 +4,7 @@ export const REGEX = {
   UPPERCASE_LETTER: new RegExp("(?=.*[A-Z])"),
   NUMERIC_CHAR: new RegExp("(?=.*[0-9])"),
   SPECIAL_CHAR: new RegExp("(?=.*[!@#\$%\^&\*])"),
-  EMAIL_VALIDATION: new RegExp("^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$", "i")
+  EMAIL_VALIDATION: new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)
 }
 
 export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';

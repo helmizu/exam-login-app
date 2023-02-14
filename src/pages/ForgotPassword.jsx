@@ -21,7 +21,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const exec = searchParams.get('exec') || '';
-  
+
   const { control, handleSubmit } = useForm({
     defaultValues: {
       username: '',
@@ -32,6 +32,7 @@ const ForgotPassword = () => {
     try {
       setLoading(true);
       const isEmail = REGEX.EMAIL_VALIDATION.test(username);
+      console.log({ isEmail, username })
       const payload = {};
       const redirectUrl = window.location.origin + '?exec=reset-password&redirectTo=/reset-password'
       const sendRecovery = isEmail ? sendRecoveryByEmail : sendRecoveryByUsername;
@@ -97,7 +98,7 @@ const ForgotPassword = () => {
                 }}
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
-                placeholder="Username"
+                placeholder="Username or Email Address"
                 sx={{ width: 400 }}
                 color="secondary"
               />
