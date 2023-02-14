@@ -10,12 +10,12 @@ import Header from '../components/Header';
 import { useAuthContext } from '../lib/AuthProvider';
 
 const schema = yup.object({
-  username: yup.string().required(),
+  username: yup.string().lowercase().required(),
   password: yup.string().required(),
 }).required();
 
 const Login = () => {
-  const { auth, signin, singining } = useAuthContext();
+  const { session, signin, singining } = useAuthContext();
   const location = useLocation();
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -26,11 +26,11 @@ const Login = () => {
     resolver: yupResolver(schema)
   });
   const onSubmit = data => {
-    // signin(data)
     console.log({ data })
+    signin(data)
   };
 
-  if (!!auth) {
+  if (!!session) {
     const redirectPath = location.state?.from || '/';
     return <Navigate to={redirectPath} replace />
   }

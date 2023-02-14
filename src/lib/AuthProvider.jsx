@@ -1,9 +1,13 @@
 import * as React from 'react'
+import queryString from 'query-string'
 import { getUser, setUser, deleteUser } from '../utils/storage';
+import { getUserData, getUserSession, loginUser, logoutUser } from './Supabase';
 
 const AuthContext = React.createContext({
-  auth: null,
+  session: null,
+  userData: null,
   singining: false,
+  loading: false,
   signin: () => { },
   signout: () => { },
 });
@@ -11,39 +15,71 @@ const AuthContext = React.createContext({
 export const useAuthContext = () => React.useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
-  const initUser = getUser();
-  const [auth, setAuth] = React.useState(initUser);
+  const qstring = window.location.search;
+  const parsedQs = queryString.parse(qstring);
+  const { user: initUser = null, session: initSession = null } = getUser() || {};
+  const [userData, setUserData] = React.useState(initUser);
+  const [session, setSession] = React.useState(initSession);
   const [singining, setSingining] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
-  const signin = async ({ email, password }) => {
+  const checkingUser = async () => {
+    try {
+      setLoading(true);
+      const { data: uData } = await getUserData();
+      const { data: uSession } = await getUserSession();
+      console.log({ uData, uSession })
+      if (uData) setUserData(uData);
+      if (uSession) setSession(uSession);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signin = async ({ username, password, remember }) => {
     setSingining(true);
     try {
-      // const userCredential = await signInWithEmailAndPassword(authRef, email, password)
-      // if (userCredential?.user) {
-      //   setAuth(userCredential?.user);
-      //   setUser(userCredential?.user);
-      // }
+      const { data, error } = await loginUser({ username, password })
+      if (error) throw error;
+      if (data) {
+        checkingUser();
+        if (remember) setUser(data);
+      }
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log({ errorCode, errorMessage })
+      console.log(error);
     } finally {
-      setSingining(false)
+      setSingining(false);
     }
   };
 
   const signout = () => {
-    // signOut(authRef);
-    setAuth(null);
-    // deleteUser();
+    logoutUser();
+    setUserData(null);
+    setSession(null);
+    deleteUser();
   }
 
   const memoizedAuth = React.useMemo(() => ({
-    auth,
+    userData,
+    session,
     signin,
     signout,
     singining,
-  }), [auth, singining])
+    loading,
+  }), [session, userData, singining, loading])
+
+  React.useEffect(() => {
+    if (initUser) {
+      checkingUser();
+    } else {
+      if (!parsedQs?.exec) signout();
+    }
+    return () => {
+      console.log("called")
+    }
+  }, [])
 
   return (
     <AuthContext.Provider value={memoizedAuth}>

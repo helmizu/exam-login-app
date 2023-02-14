@@ -13,12 +13,17 @@ import { useAuthContext } from '../lib/AuthProvider';
 import { Stack } from '@mui/material';
 
 export default function Header() {
-  const { auth, signout } = useAuthContext();
+  const { session, userData, signout } = useAuthContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
+  const handleChangePassword = () => {
+    navigate('/change-password');
+  };
+
   const handleLogout = () => {
     signout();
+    navigate('/sign-in');
   };
 
   const handleMenu = (event) => {
@@ -45,9 +50,9 @@ export default function Header() {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" width={400} justifyContent="flex-end" alignItems="center">
-          {!!auth && (
+          {!!session && (
             <Box display="flex" flexDirection="row" gap={1} alignItems="center">
-              <Typography ml={1}>{auth.email}</Typography>
+              <Typography ml={1}>{userData.name}</Typography>
               <IconButton
                 size="large"
                 onClick={handleMenu}
@@ -70,11 +75,12 @@ export default function Header() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
                 <MenuItem onClick={handleLogout}>Sign Out</MenuItem>
               </Menu>
             </Box>
           )}
-          {!auth && (
+          {!session && (
             <Stack direction="row" gap={2}>
               <Button onClick={() => navigate('/sign-in', { state: { from: location.pathname } })}>Sign In</Button>
               <Button onClick={() => navigate('/sign-up')} variant="contained">Sign Up</Button>
